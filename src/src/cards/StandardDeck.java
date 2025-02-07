@@ -25,15 +25,6 @@ public class StandardDeck implements Deck {
         return newDeck;
     }
 
-
-    @Override
-    public void cut(int index) {
-        List<Card> newDeck = new ArrayList<>();
-        newDeck.addAll(this.cards.subList(index, this.cards.size()));
-        newDeck.addAll(this.cards.subList(0, index));
-        this.cards = newDeck;
-    }
-
     @Override
     public void shuffle() {
         Collections.shuffle(this.cards);
@@ -41,28 +32,40 @@ public class StandardDeck implements Deck {
     }
 
     @Override
+    public void cut(int index) {
+        List<Card> top = this.cards.subList(0, index);
+        List<Card> bottom = this.cards.subList(index, this.cards.size());
+
+        this.cards.clear();
+
+        this.cards.addAll(bottom);
+        this.cards.addAll(top);
+    }
+
+    @Override
     public Card deal() {
-        return null;
+        return this.cards.remove(0);
     }
 
     @Override
     public Card turnOver() {
-        return null;
+        return this.cards.get(0);
     }
 
     @Override
     public void newOrder(Deck cards) {
-
+        //fix me: method should sorting the cards passed in
+        //Collections.sort(this.cards);
     }
 
     @Override
     public int search(Card card) {
-        return 0;
+        return cards.indexOf(card);
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.cards.size();
     }
 
     @Override
